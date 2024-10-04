@@ -1,81 +1,82 @@
-# Turborepo starter
+# Sandbox
 
-This is an official starter Turborepo.
+Flesh out architecture minutia without consideration for production deployments
 
-## Using this example
+## Core Product Goals
 
-Run the following command:
+Public: Build an application where any user can view details about a [model]
+Private: Build a user system where users can interact with a [model] and attribute [feature-data] to a given [model]
 
-```sh
-npx create-turbo@latest
+## Desired Features
+
+### Model Specification
+
+#### Static
+
+Description: The core model definitions that make up the 'thing' 
+
+- Name
+- Date Created
+- Description
+- Image(s)
+- ???
+
+### Dynamic (attributed by users)
+
+Description: How users will interact with the model
+
+- Rating
+- Comments
+- Tags (categorical - the 'vibe')
+- ???
+
+### Internal Aggregation of Dynamic Content
+
+Description: this data will incidentally become available once dynamic attributions begin to take shape
+
+- Average rating
+- Number of comments
+- General vibe yo
+- ???
+
+## Core Architecture Considerations
+
+### Front-End - UI Layer
+
+FrontPrimary goal seems to be getting onto the app store - this likely means leaning into react-native (ultimately). It's important to note that UI libraries built for the web are not compatible with native libraries as the code is run on fundamentally different systems. Seems like native tooling also doesn't technically run css like browsers do but exposes css-like syntax.
+
+#### Front-End Tools to Explore
+
+- React-native-web - library that allows you to react-native components on the React-DOM allowing you to test in the browser.
+- NativeWind - Tailwind for react-native. Hell yeah.
+
+
+### Front-end - BFF Layer
+
+BFF likely won't be necessary if we are able to use `react-query` to good effect - TRPC may be overkill for the simplicity of the data model (right now)
+
+### Backend Server
+
+Node may be common ground here. Both Brandon and I can write javascript and could be a good place to start. This shouldn't be the end goal though. Python would be my next exploratory recommendation however I believe GO-Lang would be best in the long run.
+
+#### GoLang Tools to Explore
+
+- Gin - Beginner-friendly REST framework
+- Echo - Minimalist REST framework - loosely based on Express
+
+### Database Interaction Layer
+
+This is where my knowledge largely falls off. I've got some experience in Javascript interacting with a local SQLite db to good effect. We may want to start here at the top of the stack so we can ignore the backend entirely and focus on front-end state management then port the model definitions to the backend of choice.
+
+### Production Build Tooling + Deployment Pipeline
+
+If we get to this point, we'll have to pull in some heavy guns.
+
+
+## Tools
+
+### Create a Directory (shorthand)
+
 ```
-
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
+turbo gen workspace
 ```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
